@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Theme tokens
+   ========================================================================== */
+
+:root {
+  --surface-bg:        #f7f7fb;
+  --surface-card:      #ffffff;
+  --surface-elev:      #fbfbfe;
+  --border:            #e5e7eb;
+
+  --text:              #0f172a;
+  --text-muted:        #525f79;
+  --text-on-accent:    #ffffff;
+
+  --accent:            #3366ff;
+  --accent-ghost:      rgba(51,102,255,.16);
+
+  --danger:            #dc2626;
+  --danger-ghost:      rgba(220,38,38,.12);
+
+  --radius:            10px;
+  --shadow-sm:         0 2px 10px rgba(0,0,0,.06);
+  --shadow-md:         0 6px 18px rgba(0,0,0,.08);
+
+  --ctrl-bg:           #ffffff;
+  --ctrl-bg-hover:     #f3f6ff;
+  --ctrl-bg-active:    #e8eeff;
+
+  --scroll-thumb:      rgba(17,24,39,.25);
+  --scroll-track:      transparent;
+}
+
+/* Optional manual dark mode: <html data-theme="dark"> */
+:root[data-theme="dark"] {
+  --surface-bg:        #0b1220;
+  --surface-card:      #0f172a;
+  --surface-elev:      #0c1426;
+  --border:            #23324a;
+
+  --text:              #e5e7eb;
+  --text-muted:        #a7b2bf;
+
+  --accent:            #5aa3ff;
+  --accent-ghost:      rgba(90,163,255,.25);
+
+  --danger:            #f87171;
+  --danger-ghost:      rgba(248,113,113,.18);
+
+  --shadow-sm:         0 2px 10px rgba(0,0,0,.35);
+  --shadow-md:         0 6px 18px rgba(0,0,0,.45);
+
+  --ctrl-bg:           #0c1424;
+  --ctrl-bg-hover:     #122035;
+  --ctrl-bg-active:    #132641;
+
+  --scroll-thumb:      rgba(229,231,235,.25);
+  --scroll-track:      transparent;
+}
+
+/* Auto dark mode via system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-bg:        #0b1220;
+    --surface-card:      #0f172a;
+    --surface-elev:      #0c1426;
+    --border:            #23324a;
+
+    --text:              #e5e7eb;
+    --text-muted:        #a7b2bf;
+
+    --accent:            #5aa3ff;
+    --accent-ghost:      rgba(90,163,255,.25);
+
+    --danger:            #f87171;
+    --danger-ghost:      rgba(248,113,113,.18);
+
+    --shadow-sm:         0 2px 10px rgba(0,0,0,.35);
+    --shadow-md:         0 6px 18px rgba(0,0,0,.45);
+
+    --ctrl-bg:           #0c1424;
+    --ctrl-bg-hover:     #122035;
+    --ctrl-bg-active:    #132641;
+
+    --scroll-thumb:      rgba(229,231,235,.25);
+    --scroll-track:      transparent;
+  }
+}
+
+/* Higher contrast */
+@media (prefers-contrast: more) {
+  :root { --accent-ghost: rgba(51,102,255,.28); }
+}
+
+/* Forced-colors */
+@media (forced-colors: active) {
+  * { forced-color-adjust: auto; }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--surface-bg);
+  color: var(--text);
+  font: 14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  margin: 0;
+}
+
+body { padding: 18px; }
+body.with-popup { padding: 0; }
+
+.options, .popup {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Headings */
+h1, h2, h3 { margin: 0 0 10px; font-weight: 650; letter-spacing: .2px; }
+h1 { font-size: 20px; }
+h2 { font-size: 18px; }
+h3 { font-size: 15px; color: var(--text-muted); }
+
+/* ==========================================================================
+   Popup
+   ========================================================================== */
+
+.popup {
+  width: 360px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: var(--surface-bg);
+}
+
+.popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.popup__title { margin: 0; font-size: 16px; font-weight: 600; }
+
+.controls {
+  position: sticky;
+  top: 0;
+  background: var(--surface-elev);
+  z-index: 1;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.controls__spacer { flex: 1; }
+
+/* Scroll area */
+#items {
+  overflow: auto;
+  flex: 1;
+  min-height: 200px;
+  max-height: 520px;
+}
+
+/* Custom scrollbar */
+#items::-webkit-scrollbar { width: 10px; height: 10px; }
+#items::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; }
+#items::-webkit-scrollbar-track { background: var(--scroll-track); }
+
+/* ==========================================================================
+   Cards / Sections
+   ========================================================================== */
+
+.options section {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+/* Lists on options page */
+.options ul { list-style: none; margin: 6px 0 0; padding: 0; }
+.options li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.options li:last-child { border-bottom: 0; }
+
+.host, .options .empty { color: var(--text-muted); font-size: 12px; }
+
+/* ==========================================================================
+   Inputs & Controls
+   ========================================================================== */
+
+input[type="text"],
+input[type="search"],
+select {
+  appearance: none;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--ctrl-bg);
+  min-width: 200px;
+  color: var(--text);
+  transition: border-color .12s, box-shadow .12s, background .12s;
+}
+input::placeholder,
+input[type="search"]::placeholder { color: var(--text-muted); }
+
+input:hover, select:hover { background: var(--ctrl-bg-hover); }
+input:active, select:active { background: var(--ctrl-bg-active); }
+
+input:focus-visible, select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ghost);
+}
+
+/* File input on options */
+.backup-row input[type="file"] {
+  background: var(--ctrl-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+/* Inline form */
+.options form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.options form input { flex: 1 1 280px; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+button {
+  border: 1px solid var(--border);
+  background: var(--ctrl-bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: box-shadow .12s, transform .05s, border-color .12s, background .12s, filter .12s;
+}
+button:hover { background: var(--ctrl-bg-hover); box-shadow: var(--shadow-sm); }
+button:active { background: var(--ctrl-bg-active); transform: translateY(1px); }
+button:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-ghost); }
+
+/* True/native disabled (used elsewhere if needed) */
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+button.mini { padding: 4px 8px; font-size: 12px; }
+
+/* Primary */
+.btn--primary {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+.btn--primary:hover { filter: brightness(1.04); box-shadow: var(--shadow-sm); }
+.btn--primary:active { filter: brightness(.98); }
+.btn--primary:disabled { filter: grayscale(.2); }
+
+/* Danger */
+button.danger {
+  border-color: transparent;
+  background: var(--danger-ghost);
+  color: var(--danger);
+}
+button.danger:hover { box-shadow: 0 4px 14px rgba(220,38,38,.18); }
+
+/* Small inline delete (popup row “✕”) */
+.del,
+.item-delete {
+  border: none;
+  background: var(--danger-ghost);
+  color: var(--danger);
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: background .15s, box-shadow .12s;
+}
+.del:hover,
+.item-delete:hover { background: rgba(220,38,38,.2); }
+.del:focus-visible,
+.item-delete:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(248,113,113,.35); }
+
+/* Icon button (settings) */
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 6px;
+  transition: background .12s, color .12s;
+}
+.icon-btn:hover { background: var(--accent-ghost); }
+.icon-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent-ghost); }
+
+/* ==========================================================================
+   Rows (popup item list)
+   ========================================================================== */
+
+.row {
+  display: grid;
+  grid-template-columns: 18px 1fr auto; /* checkbox | title | delete */
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  min-height: 32px;
+}
+.row:last-child { border-bottom: 0; }
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub { font-size: 12px; color: var(--text-muted); }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .row { grid-template-columns: 18px 1fr auto; }
+  .controls input, .controls select { min-width: 140px; }
+}
+
+/* Accessibility helper */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* Bulk Delete: never show the not-allowed cursor */
+#bulkDelete { 
+  cursor: pointer !important;
+}
+
+/* Keep only the visual dim when “disabled” */
+#bulkDelete[aria-disabled="true"] {
+  opacity: .55 !important;
+  /* no cursor change here */
+}
+

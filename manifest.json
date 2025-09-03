@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_ext_name__",
+  "short_name": "WL+",
+  "description": "__MSG_ext_desc__",
+  "version": "1.1.0",
+  "default_locale": "en",
+
+  "action": {
+    "default_title": "WatchLater+",
+    "default_popup": "src/popup/index.html"
+  },
+
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  },
+
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
+
+  "options_page": "src/options/index.html",
+
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["src/content/selection.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "icons": {
+    "16": "assets/icons/16.png",
+    "48": "assets/icons/48.png",
+    "128": "assets/icons/128.png"
+  },
+
+  "minimum_chrome_version": "100"
+}

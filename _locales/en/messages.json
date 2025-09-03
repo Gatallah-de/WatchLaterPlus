@@ -1,0 +1,8 @@
+{
+  "ext_name": {
+    "message": "WatchLater+"
+  },
+  "ext_desc": {
+    "message": "Capture highlighted titles (books/movies/anime) via right-click. Local-only. Export JSON/CSV/Markdown."
+  }
+}

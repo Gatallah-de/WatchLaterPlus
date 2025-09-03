@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WatchLater+</title>
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="../styles.css" />
+
+  <!-- Minimal popup-safe baseline so it still looks fine without styles.css -->
+  <style>
+    :root { --border: #222; }
+    @media (prefers-color-scheme: light) { :root { --border: #e5e7eb; } }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    body.with-popup { padding: 0; } /* prevent outer page padding in popup */
+
+    .popup { width: 360px; max-height: 600px; display: flex; flex-direction: column; padding: 12px; }
+    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px; gap: 8px; }
+    .header strong { font-weight: 600; }
+    .actions { display:flex; gap:8px; margin-top:4px; }
+    #items { overflow:auto; flex:1; border-top:1px solid var(--border); margin-top:8px; padding-top:4px; }
+
+    .row { display:grid; grid-template-columns: 18px 1fr auto; gap:10px; align-items:center; padding:8px 0; border-bottom:1px dashed var(--border); }
+    .row:last-child { border-bottom: 0; }
+    .title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .sub { font-size: 12px; opacity: .7; }
+    .del { border: none; background: #2a2a2a; padding: 2px 6px; border-radius: 6px; cursor: pointer; color: #fff; }
+
+    /* Bulk delete: NEVER show not-allowed cursor; JS gates logic via aria-disabled */
+    #bulkDelete { cursor: pointer; }
+    #bulkDelete[aria-disabled="true"] {
+      opacity: .55;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    button:focus-visible, input[type="checkbox"]:focus-visible {
+      outline: 2px solid #6aa3ff; outline-offset: 2px; border-radius: 6px;
+    }
+
+    /* inline fallback in case global .sr-only isn't loaded */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+<body class="with-popup">
+  <div class="popup" role="application" aria-label="WatchLater+">
+    <div class="header">
+      <strong>WatchLater+</strong>
+      <button id="openOptions" type="button" class="icon-btn" title="Open settings" aria-label="Open settings">⚙️</button>
+    </div>
+
+    <div class="actions" role="group" aria-label="Bulk actions">
+      <!-- ARIA-only disabled; JS flips aria-disabled and .is-enabled/.is-disabled -->
+      <button
+        id="bulkDelete"
+        type="button"
+        aria-disabled="true"
+        class="is-disabled"
+      >
+        Delete selected
+      </button>
+      <span class="sr-only" aria-live="polite" id="bulkStatus"></span>
+    </div>
+
+    <!-- Items render here -->
+    <section id="items" role="region" aria-live="polite" aria-label="Saved items"></section>
+
+    <noscript><p style="padding:6px 0; opacity:.7;">JavaScript is required.</p></noscript>
+  </div>
+
+  <!-- Defer so DOM is ready before the script; matches our delegated listeners -->
+  <script src="./index.js" defer></script>
+</body>
+</html>
